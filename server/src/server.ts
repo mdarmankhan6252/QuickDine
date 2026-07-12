@@ -1,7 +1,9 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './app/config/db.js';
+import authRouter from './app/modules/auth/auth.router.js';
+import { Error } from 'mongoose';
 
 dotenv.config();
 const app = express();
@@ -21,6 +23,17 @@ app.get('/', (req: Request, res: Response) => {
         message: "MY SERVER IS LIVE."
     });
 });
+
+app.use('/api/auth', authRouter)
+
+// global error handler 
+app.use((err: Error, req: Request, res: Response, next: NextFunction) =>{
+    console.log("Unhandled Error", err);
+    res.status(500).json({
+        message: err.message || "Internal Server Error",
+        stack: process.env.NODE_ENV === 'production' ? undefined : err.stack
+    })
+})
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
