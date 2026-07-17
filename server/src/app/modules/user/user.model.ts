@@ -6,6 +6,7 @@ const userSchema = new Schema<IUser>({
     email: { type: String, required: true, trim: true, lowercase: true, unique: true },
     password: { type: String, required: true, minlength: 6 },
     role: { type: String, enum: Object.values(UserRole), default: UserRole.user },
+    phone: { type: String, trim: true },
 }, { timestamps: true })
 
 //removed password when converting to json
