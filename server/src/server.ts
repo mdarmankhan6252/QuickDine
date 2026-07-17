@@ -6,6 +6,7 @@ import authRouter from './app/modules/auth/auth.router.js';
 import { Error } from 'mongoose';
 import restaurantRouter from './app/modules/restaurant/restaurant.router.js';
 import bookingRouter from './app/modules/booking/booking.router.js';
+import ownerRouter from './app/modules/owner/owner.router.js';
 
 dotenv.config();
 const app = express();
@@ -29,6 +30,7 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/api/auth', authRouter);
 app.use('/api/restaurants', restaurantRouter);
 app.use('/api/bookings', bookingRouter)
+app.use('/api/owner', ownerRouter)
 
 // global error handler 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) =>{
